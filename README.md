@@ -44,7 +44,7 @@ scenes/      # Main scene(s), menus, etc.
 
 ## 💡 Notes
 
-- Art assets are placeholder sprites (purchased/royalty-free).
+- Art assets are placeholder sprites (purchased/royalty-free). Credit goes to Penusbmic on itch.io (https://penusbmic.itch.io/)
 - This project is primarily for learning and prototyping.
 - Export targets: desktop first; mobile/web maybe later.
 
