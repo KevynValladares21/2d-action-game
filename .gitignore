@@ -1,0 +1,26 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+/ios/
+
+# Import cache (auto-generated, shouldn't be versioned)
+.import/
+
+# Export and build files
+export.cfg
+export_presets.cfg
+
+# Godot editor crash logs and lock files
+*.log
+*.tmp
+*.lock
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Backup files (optional)
+*.bak
+*.old
+
