@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cg8qdsevmlfcq"
-path="res://.godot/imported/City Tileset.png-f7317f96e2f71d2421d82cd9c0d7532e.ctex"
+uid="uid://c4bnc5jsj6wcu"
+path="res://.godot/imported/City Tileset.png-0d95d653598a920f007d3e1741bc0705.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/City Tileset.png"
-dest_files=["res://.godot/imported/City Tileset.png-f7317f96e2f71d2421d82cd9c0d7532e.ctex"]
+source_file="res://assets/sprites/tilesets/The DARK Series - City Tileset/Tileset/City Tileset.png"
+dest_files=["res://.godot/imported/City Tileset.png-0d95d653598a920f007d3e1741bc0705.ctex"]
 
 [params]
 
