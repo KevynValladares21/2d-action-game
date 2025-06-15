@@ -22,9 +22,14 @@ This is a personal side project focused on building a basic combat loop, featuri
    git clone git@github.com:KevynValladares21/2d-action-game.git
    ```
 
-2. Open the project in Godot 4.x (tested with Flatpak build).
+2. Add the assets/ folder:
+You can download or create your own assets. For now, I’m using placeholder assets from Penusbmic's itch.io page (https://penusbmic.itch.io/).
+Place your sprites, sounds, and other game assets into an assets/ folder in the root of the project.
+Note: Replace the placeholder assets with your own as needed.
 
-3. Run the `Game.tscn` scene to test gameplay.
+3. Open the project in Godot 4.x (tested with Flatpak build).
+
+4. Run the `Game.tscn` scene to test gameplay.
 
 ---
 
