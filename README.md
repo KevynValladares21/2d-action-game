@@ -32,7 +32,7 @@ This is a personal side project focused on building a basic combat loop, featuri
 
 3. Open the project in Godot 4.x (tested with Flatpak build).
 
-4. Run the `Game.tscn` scene to test gameplay.
+4. Run the `title-screen.tscn` scene to test gameplay.
 
 ---
 
