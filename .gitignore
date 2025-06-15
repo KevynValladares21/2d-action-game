@@ -24,3 +24,5 @@ desktop.ini
 *.bak
 *.old
 
+#Proprietary assets should NOT be publicly available
+/assets/
