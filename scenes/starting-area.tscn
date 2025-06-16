@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://3622wn7puseg"]
+[gd_scene load_steps=6 format=4 uid="uid://3622wn7puseg"]
 
 [ext_resource type="PackedScene" uid="uid://cfp0cxgyeyu6i" path="res://player/player.tscn" id="1_esx1c"]
-[ext_resource type="Texture2D" uid="uid://c4bnc5jsj6wcu" path="res://assets/sprites/tilesets/The DARK Series - City Tileset/Tileset/City Tileset.png" id="2_kljjh"]
+[ext_resource type="Texture2D" uid="uid://dgwietdd7q4i" path="res://assets/sprites/tilesets/The DARK Series - City Tileset/Tileset/City Tileset.png" id="2_kljjh"]
+[ext_resource type="PackedScene" uid="uid://q6p41q2in7u5" path="res://enemies/dagger-mushroom.tscn" id="3_hgsjx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hgsjx"]
 texture = ExtResource("2_kljjh")
@@ -239,8 +240,16 @@ sources/2 = SubResource("TileSetAtlasSource_hgsjx")
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_esx1c")]
+[node name="Player" type="Node2D" parent="."]
+
+[node name="Player" parent="Player" instance=ExtResource("1_esx1c")]
 position = Vector2(-79, -2)
+
+[node name="Mobs" type="Node2D" parent="."]
+position = Vector2(31, -9)
+
+[node name="Dagger_Mushroom" parent="Mobs" instance=ExtResource("3_hgsjx")]
+position = Vector2(30, 10)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
