@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cfp0cxgyeyu6i"]
+[gd_scene load_steps=21 format=3 uid="uid://cfp0cxgyeyu6i"]
 
 [ext_resource type="Texture2D" uid="uid://rgqpdifk5567" path="res://assets/sprites/player/All 3 Sprites/assassin/idle.png" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://cl6u43i258cc4" path="res://scripts/player.gd" id="1_rkbax"]
@@ -7,7 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://cdd0no0rruo5e" path="res://assets/sprites/player/All 3 Sprites/assassin/fall.png" id="6_e7oew"]
 [ext_resource type="Script" uid="uid://d15bkvmyw545g" path="res://components/health.gd" id="8_rgyib"]
 [ext_resource type="Texture2D" uid="uid://cs1mybpnx4187" path="res://assets/sprites/player/All 3 Sprites/assassin/jump.png" id="9_65viv"]
+[ext_resource type="Script" uid="uid://c5f1cjuupsipm" path="res://components/hitbox.gd" id="9_hg6s5"]
 [ext_resource type="Texture2D" uid="uid://c6myso75auc1d" path="res://assets/sprites/player/All 3 Sprites/assassin/run with VFX.png" id="13_g4c7l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hg6s5"]
+radius = 3.72686
+height = 24.083
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hg6s5"]
+radius = 17.1172
 
 [sub_resource type="Animation" id="Animation_c35mf"]
 resource_name = "Attack1"
@@ -73,6 +81,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [0, 2, 4, 6]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../HitBox/Attack1Collider:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.07),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="Animation" id="Animation_65viv"]
 resource_name = "Attack2"
@@ -137,6 +157,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 2, 4, 6, 8]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../HitBox/Attack2Collider:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.07),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_e7oew"]
@@ -399,6 +431,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [9]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../HitBox/Attack1Collider:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../HitBox/Attack2Collider:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_32hag"]
 resource_name = "Run"
@@ -490,6 +546,24 @@ script = ExtResource("1_rkbax")
 texture = ExtResource("1_oul6g")
 hframes = 3
 vframes = 9
+
+[node name="HitBox" type="Area2D" parent="SpritePivot"]
+collision_mask = 0
+script = ExtResource("9_hg6s5")
+metadata/_custom_type_script = "uid://c5f1cjuupsipm"
+
+[node name="Attack1Collider" type="CollisionShape2D" parent="SpritePivot/HitBox"]
+position = Vector2(8, -2.38419e-07)
+rotation = 0.882712
+shape = SubResource("CapsuleShape2D_hg6s5")
+disabled = true
+
+[node name="Attack2Collider" type="CollisionShape2D" parent="SpritePivot/HitBox"]
+position = Vector2(5, -2.38419e-07)
+rotation = -0.257516
+scale = Vector2(1, 0.6)
+shape = SubResource("CircleShape2D_hg6s5")
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SpritePivot/Sprite2D")

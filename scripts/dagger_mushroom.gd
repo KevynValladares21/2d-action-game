@@ -59,3 +59,7 @@ func _on_player_detection_body_exited(body: Node2D) -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Combo":
 		is_attacking = false
+
+
+func _on_health_health_depleted() -> void:
+	queue_free()
