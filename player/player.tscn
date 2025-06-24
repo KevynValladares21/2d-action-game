@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cfp0cxgyeyu6i"]
+[gd_scene load_steps=25 format=3 uid="uid://cfp0cxgyeyu6i"]
 
 [ext_resource type="Texture2D" uid="uid://rgqpdifk5567" path="res://assets/sprites/player/All 3 Sprites/assassin/idle.png" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://cl6u43i258cc4" path="res://scripts/player.gd" id="1_rkbax"]
@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://cm1lc0ch0r2mh" path="res://assets/sprites/player/All 3 Sprites/assassin/attack 2 with VFX.png" id="3_wodsf"]
 [ext_resource type="Texture2D" uid="uid://cdd0no0rruo5e" path="res://assets/sprites/player/All 3 Sprites/assassin/fall.png" id="6_e7oew"]
 [ext_resource type="Script" uid="uid://d15bkvmyw545g" path="res://components/health.gd" id="8_rgyib"]
+[ext_resource type="Texture2D" uid="uid://dshab82kidjti" path="res://assets/sprites/player/All 3 Sprites/assassin/death.png" id="9_2ieo8"]
 [ext_resource type="Texture2D" uid="uid://cs1mybpnx4187" path="res://assets/sprites/player/All 3 Sprites/assassin/jump.png" id="9_65viv"]
 [ext_resource type="Script" uid="uid://c5f1cjuupsipm" path="res://components/hitbox.gd" id="9_hg6s5"]
+[ext_resource type="Script" uid="uid://b6a8lg6s2yn1u" path="res://components/hurtbox.gd" id="10_8t03j"]
 [ext_resource type="Texture2D" uid="uid://c6myso75auc1d" path="res://assets/sprites/player/All 3 Sprites/assassin/run with VFX.png" id="13_g4c7l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hg6s5"]
@@ -522,10 +524,76 @@ tracks/4/keys = {
 "values": [0, 3, 6, 9, 12, 15, 18, 21]
 }
 
+[sub_resource type="Animation" id="Animation_ebec5"]
+resource_name = "Death"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_2ieo8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 3, 6, 9, 12, 15, 18, 21]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_32hag"]
 _data = {
 &"Attack1": SubResource("Animation_c35mf"),
 &"Attack2": SubResource("Animation_65viv"),
+&"Death": SubResource("Animation_ebec5"),
 &"Fall": SubResource("Animation_e7oew"),
 &"Idle": SubResource("Animation_kb6p2"),
 &"Jump": SubResource("Animation_tqiix"),
@@ -536,6 +604,9 @@ _data = {
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ebec5"]
 radius = 3.0
 height = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8t03j"]
+size = Vector2(6, 15)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_rkbax")
@@ -580,4 +651,15 @@ shape = SubResource("CapsuleShape2D_ebec5")
 script = ExtResource("8_rgyib")
 metadata/_custom_type_script = "uid://d15bkvmyw545g"
 
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("10_8t03j")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://b6a8lg6s2yn1u"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+visibility_layer = 2
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_8t03j")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]

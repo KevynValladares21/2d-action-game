@@ -6,11 +6,14 @@ var SPEED = 50
 var ATTACK_RANGE = 30
 var is_attacking = false
 var facing_right = true
+var is_dead = false
 
 @onready var sprite_pivot: Node2D = $SpritePivot
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _process(delta: float) -> void:
+	if is_dead:
+		return
 	if chase and player:
 		var to_player = player.global_position - global_position
 		var distance = to_player.length()
@@ -31,6 +34,9 @@ func _process(delta: float) -> void:
 		velocity.x = 0
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		move_and_slide()  # if you want to ensure gravity still acts during death animation
+		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	move_and_slide()
@@ -59,7 +65,10 @@ func _on_player_detection_body_exited(body: Node2D) -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Combo":
 		is_attacking = false
-
+	elif anim_name == "Death":
+		queue_free()
 
 func _on_health_health_depleted() -> void:
-	queue_free()
+	is_dead = true
+	animation_player.play("Death")
+	velocity = Vector2.ZERO

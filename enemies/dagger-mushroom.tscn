@@ -1,9 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://q6p41q2in7u5"]
+[gd_scene load_steps=18 format=3 uid="uid://q6p41q2in7u5"]
 
 [ext_resource type="Texture2D" uid="uid://cxig0qdsqa4f" path="res://assets/sprites/enemies/08 DARK - Character Pack 2/Dagger Mush/All.png" id="1_cmqra"]
 [ext_resource type="Script" uid="uid://dlwht4w1uvwnk" path="res://scripts/dagger_mushroom.gd" id="1_y76ti"]
+[ext_resource type="Script" uid="uid://c5f1cjuupsipm" path="res://components/hitbox.gd" id="3_8fs1s"]
 [ext_resource type="Script" uid="uid://d15bkvmyw545g" path="res://components/health.gd" id="3_asoxt"]
 [ext_resource type="Script" uid="uid://b6a8lg6s2yn1u" path="res://components/hurtbox.gd" id="4_a6234"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ffqey"]
+radius = 39.0936
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8fs1s"]
+radius = 18.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0o786"]
 radius = 7.0
@@ -35,6 +42,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpritePivot/HitBox/ComboHitbox1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpritePivot/HitBox/ComboHitbox2:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_cmqra"]
@@ -92,6 +123,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpritePivot/HitBox/ComboHitbox1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpritePivot/HitBox/ComboHitbox2:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_a6234"]
@@ -155,7 +210,8 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_ffqey"]
-resource_name = "new"
+resource_name = "Death"
+length = 1.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -164,26 +220,27 @@ tracks/0/path = NodePath("SpritePivot/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_asoxt"]
 _data = {
 &"Combo": SubResource("Animation_asoxt"),
+&"Death": SubResource("Animation_ffqey"),
 &"Idle": SubResource("Animation_cmqra"),
 &"RESET": SubResource("Animation_y76ti"),
 &"Run": SubResource("Animation_a6234"),
-&"Run-Fast": SubResource("Animation_8fs1s"),
-&"new": SubResource("Animation_ffqey")
+&"Run-Fast": SubResource("Animation_8fs1s")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_asoxt"]
 radius = 70.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fs1s"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a6234"]
+height = 26.0
 
 [node name="Dagger_Mushroom" type="CharacterBody2D"]
 script = ExtResource("1_y76ti")
@@ -195,6 +252,24 @@ texture = ExtResource("1_cmqra")
 offset = Vector2(53, -30)
 hframes = 12
 vframes = 8
+
+[node name="HitBox" type="Area2D" parent="SpritePivot"]
+script = ExtResource("3_8fs1s")
+faction = "enemy"
+metadata/_custom_type_script = "uid://c5f1cjuupsipm"
+
+[node name="ComboHitbox1" type="CollisionShape2D" parent="SpritePivot/HitBox"]
+position = Vector2(25, 3)
+rotation = -0.012493
+scale = Vector2(1, 0.154)
+shape = SubResource("CircleShape2D_ffqey")
+disabled = true
+
+[node name="ComboHitbox2" type="CollisionShape2D" parent="SpritePivot/HitBox"]
+position = Vector2(10, 4)
+scale = Vector2(1, 0.3)
+shape = SubResource("CircleShape2D_8fs1s")
+disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -218,10 +293,12 @@ metadata/_custom_type_script = "uid://d15bkvmyw545g"
 collision_layer = 0
 script = ExtResource("4_a6234")
 health = NodePath("../Health")
+faction = "enemy"
 metadata/_custom_type_script = "uid://b6a8lg6s2yn1u"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource("RectangleShape2D_8fs1s")
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_a6234")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]

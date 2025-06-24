@@ -4,6 +4,7 @@ const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 var is_attacking = false
 var attack_switch = false
+var is_dead = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_2d: Sprite2D = $SpritePivot/Sprite2D
@@ -11,6 +12,9 @@ var attack_switch = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
+	if is_dead:
+		move_and_slide()  # if you want to ensure gravity still acts during death animation
+		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -66,6 +70,13 @@ func _handle_movement_and_animation():
 	elif is_on_floor():
 		velocity.x = 0
 
+func _on_health_health_depleted() -> void:
+	is_dead = true
+	animation_player.play("Death")
+	velocity = Vector2.ZERO
+
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Attack1" or anim_name == "Attack2":
 		is_attacking = false
+	elif anim_name == "Death":
+		queue_free()
