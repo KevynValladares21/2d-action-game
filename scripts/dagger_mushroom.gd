@@ -3,15 +3,18 @@ extends CharacterBody2D
 var player
 var chase = false
 var SPEED = 50
-var ATTACK_RANGE = 30
+var ATTACK_RANGE = 50
 var is_attacking = false
 var facing_right = true
 var is_dead = false
+var attack_cooldown := 0.0
+var ATTACK_COOLDOWN_TIME := 5.0
 
 @onready var sprite_pivot: Node2D = $SpritePivot
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _process(delta: float) -> void:
+	attack_cooldown = max(0.0, attack_cooldown - delta)
 	if is_dead:
 		return
 	if chase and player:
@@ -26,16 +29,19 @@ func _process(delta: float) -> void:
 		if distance > ATTACK_RANGE:
 			is_attacking = false
 			_run(to_player)
-		elif not is_attacking:
+		elif not is_attacking and attack_cooldown == 0.0:
 			is_attacking = true
+			attack_cooldown = ATTACK_COOLDOWN_TIME
 			_attack()
+		elif not is_attacking:
+			animation_player.play("Idle")
 	else:
 		animation_player.play("Idle")
 		velocity.x = 0
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
-		move_and_slide()  # if you want to ensure gravity still acts during death animation
+		move_and_slide()
 		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta
