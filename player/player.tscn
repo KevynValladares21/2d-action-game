@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cfp0cxgyeyu6i"]
+[gd_scene load_steps=28 format=3 uid="uid://cfp0cxgyeyu6i"]
 
 [ext_resource type="Texture2D" uid="uid://rgqpdifk5567" path="res://assets/sprites/player/All 3 Sprites/assassin/idle.png" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://cl6u43i258cc4" path="res://scripts/player.gd" id="1_rkbax"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://b6a8lg6s2yn1u" path="res://components/hurtbox.gd" id="10_8t03j"]
 [ext_resource type="Texture2D" uid="uid://b3x0n5s6b11ix" path="res://assets/sprites/player/All 3 Sprites/assassin/hit.png" id="10_ebec5"]
 [ext_resource type="Texture2D" uid="uid://c6myso75auc1d" path="res://assets/sprites/player/All 3 Sprites/assassin/run with VFX.png" id="13_g4c7l"]
+[ext_resource type="PackedScene" uid="uid://bfwmd4fdaingj" path="res://ui/healthbar.tscn" id="13_yllr7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hg6s5"]
 radius = 3.72686
@@ -716,7 +717,7 @@ shape = SubResource("CapsuleShape2D_ebec5")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("8_rgyib")
-max_health = 5
+max_health = 100
 metadata/_custom_type_script = "uid://d15bkvmyw545g"
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
@@ -728,6 +729,10 @@ metadata/_custom_type_script = "uid://b6a8lg6s2yn1u"
 visibility_layer = 2
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_8t03j")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Healthbar" parent="CanvasLayer" instance=ExtResource("13_yllr7")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]

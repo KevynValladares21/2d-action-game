@@ -11,6 +11,12 @@ var knockback_velocity := Vector2.ZERO
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_2d: Sprite2D = $SpritePivot/Sprite2D
 @onready var sprite_pivot: Node2D = $SpritePivot
+@onready var healthbar = $CanvasLayer/Healthbar
+@onready var hurtbox = $HurtBox
+
+func _ready():
+	hurtbox.received_damage.connect(_on_player_damaged)
+	healthbar.init_health(hurtbox.health.health)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -99,3 +105,6 @@ func apply_hit_horizontal(from_pos: Vector2, strength := 150.0) -> void:
 	# instead of setting velocity directly, store it here
 	knockback_velocity = Vector2(dir_sign * strength, 0)
 	animation_player.play("Hit")
+
+func _on_player_damaged(amount: int):
+	healthbar.health = hurtbox.health.health

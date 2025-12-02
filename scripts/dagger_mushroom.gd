@@ -8,7 +8,7 @@ var is_attacking = false
 var facing_right = true
 var is_dead = false
 var attack_cooldown := 0.0
-var ATTACK_COOLDOWN_TIME := 5.0
+var ATTACK_COOLDOWN_TIME := 2.0
 
 @onready var sprite_pivot: Node2D = $SpritePivot
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -22,12 +22,13 @@ func _process(delta: float) -> void:
 		var distance = to_player.length()
 
 		# Only flip if not attacking and direction is clear
-		if not is_attacking and abs(to_player.x) > 4:
+		if not is_attacking and distance > 4:
 			facing_right = to_player.x > 0
 			sprite_pivot.scale.x = 1 if facing_right else -1
+			if distance > ATTACK_RANGE:
+				_run(to_player)
 
-		if distance > ATTACK_RANGE:
-			is_attacking = false
+		if distance > ATTACK_RANGE and not is_attacking:
 			_run(to_player)
 		elif not is_attacking and attack_cooldown == 0.0:
 			is_attacking = true
@@ -50,7 +51,10 @@ func _physics_process(delta: float) -> void:
 func _run(to_player: Vector2):
 	animation_player.play("Run")
 	var dir = Vector2.ZERO
-	if to_player.length() > 10:
+	if (to_player.length() < 10):
+		velocity.x = dir.x * 0
+		return
+	elif to_player.length() > 10:
 		dir = to_player.normalized()
 	velocity.x = dir.x * SPEED
 

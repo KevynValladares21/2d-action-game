@@ -267,6 +267,7 @@ vframes = 8
 
 [node name="HitBox" type="Area2D" parent="SpritePivot"]
 script = ExtResource("3_8fs1s")
+damage = 20
 faction = "enemy"
 metadata/_custom_type_script = "uid://c5f1cjuupsipm"
 
