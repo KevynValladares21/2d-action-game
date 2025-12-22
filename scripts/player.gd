@@ -89,7 +89,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == "Death":
 		queue_free()
 		
-func apply_hit_horizontal(from_pos: Vector2, strength := 150.0) -> void:
+func apply_hit(from_pos: Vector2, strength := 150.0) -> void:
 	# decide which way to push the player based on where the enemy is
 	var sx := global_position.x - from_pos.x
 	var dir_sign := 0
