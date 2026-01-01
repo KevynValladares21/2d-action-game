@@ -251,6 +251,5 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == &"Death":
 		queue_free()
 
-
 func _on_player_damaged(amount: int) -> void:
 	healthbar.health = hurtbox.health.health

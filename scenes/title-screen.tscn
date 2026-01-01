@@ -27,6 +27,7 @@ theme_override_font_sizes/font_size = 100
 text = "Welcome To The Game"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="play-button" type="Button" parent="."]
 offset_left = 254.0
@@ -36,6 +37,7 @@ offset_bottom = 451.0
 theme_override_font_sizes/font_size = 50
 text = "Play"
 script = SubResource("GDScript_epc2a")
+metadata/_edit_use_anchors_ = true
 
 [node name="quit-button" type="Button" parent="."]
 offset_left = 647.0
@@ -45,6 +47,7 @@ offset_bottom = 567.0
 theme_override_font_sizes/font_size = 50
 text = "Quit"
 script = SubResource("GDScript_20w21")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="play-button" to="play-button" method="_on_pressed"]
 [connection signal="pressed" from="quit-button" to="quit-button" method="_on_pressed"]
